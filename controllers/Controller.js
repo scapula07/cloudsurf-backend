@@ -106,6 +106,7 @@ exports.redirect= async (req, res, next) => {
           //    });
          res.redirect ("http://127.0.0.1:5174/google-redirect");
 
+          //   res.redirect ("https://cloudsurf-auth.vercel.app/google-redirect");
      }catch(e){
           console.log(e)
      }
@@ -125,7 +126,7 @@ exports.dropBoxredirect= async (req, res, next) => {
         fs.writeFileSync("dbtoken.json",JSON.stringify({}))
         fs.writeFileSync("dbtoken.json",JSON.stringify(token))
          res.redirect ("http://127.0.0.1:5174/dropbox-redirect");
-
+          //   res.redirect ("https://cloudsurf-auth.vercel.app/dropbox-redirect");
      }catch(e){
           console.log(e)
      }
@@ -197,12 +198,12 @@ exports.getFiles= async (req, res, next) => {
      
      const {googleToken, dropboxToken,googleExpire,dropboxExpire}=req.body
      console.log(googleToken, dropboxToken,googleExpire,dropboxExpire)
-     // console.log(new Date().setSeconds(googleExpire) < new Date().setSeconds())
-     // console.log(new Date().setSeconds(googleExpire))
-    
+ 
+     let errors=[]
           try{
              let box=[]
              let drives=[]
+             
            if(googleToken?.length >0 && googleToken !=undefined){
                try{
                     oauth2Client.setCredentials({
@@ -219,10 +220,11 @@ exports.getFiles= async (req, res, next) => {
                          const listParams = {};
                          const response = await drive.files.list(listParams);
                          drives.push(...response.data.files)
-                         // console.log(drives,"dd")
+                         console.log(drives,"dd")
 
                     }catch(e){
                          console.log(e.message)
+                         errors.push(e.message)
                     }
      
                 }
@@ -235,6 +237,7 @@ exports.getFiles= async (req, res, next) => {
                        console.log(box,"boxx")
                       }catch(e){
                          console.log(e.message)
+                         errors.push(e.message)
                      }
            
                     
@@ -242,16 +245,20 @@ exports.getFiles= async (req, res, next) => {
                    }
           
                    console.log(box,"boxx")
-               const files=[...box,...drives]
-               // console.log(files,"file")
+               const files=[...drives,...box]
+               console.log(files,"file")
+
+               console.log(errors,"error")
                
                 res.status(200).json({
                     status: 'success',
-                    files
+                    files,
+                    errors
                   });
                    
               } catch (e) {
-              console.log(e)
+                 console.log(e)
+                 errors.push(e.message)
             }
           }
      
@@ -377,6 +384,10 @@ exports.downloadGoogleFile= async (req, res, next) => {
 
      }catch(e){
           console.log(e)
+          res.status(200).json({
+               status: 'success',
+               error:e?.message
+          });
      }
   
 
@@ -407,6 +418,10 @@ exports.downloadBoxFile= async (req, res, next) => {
      
      }catch(e){
           console.log(e)
+          res.status(200).json({
+               status: 'success',
+               error:e?.message
+          });
      }
      
 }
@@ -443,6 +458,10 @@ exports.deleteGoogleFile= async (req, res, next) => {
                  
           }catch(e){
                console.log(e)
+               res.status(200).json({
+                    status: 'success',
+                    error:e?.GaxiosError
+               });
           }
 
 }
@@ -467,6 +486,10 @@ exports.deleteBoxFile= async (req, res, next) => {
      
      }catch(e){
           console.log(e)
+          res.status(200).json({
+               status: 'success',
+               error:e?.message
+          });
      }
 
 }
