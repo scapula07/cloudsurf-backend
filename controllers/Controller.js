@@ -9,12 +9,20 @@ const{ Configuration, OpenAIApi }=require("openai");
 const keyPath = path.join('/Users/user/Desktop/cloudsurf/newcred.json');
 
 
-let keys = {redirect_uris: ['']};
-if (fs.existsSync(keyPath)) {
-     console.log("iiii")
-  keys = require(keyPath).web;
+// let keys = {redirect_uris: ['']};
+// if (fs.existsSync(keyPath)) {
+//      console.log("iiii")
+//   keys = require(keyPath).web;
 
-}
+// }
+const keys={web:
+  {client_id:"861832968088-r0n7t3558nn2l2uhha6j4t7mce68o7oe.apps.googleusercontent.com",
+  project_id:"coblock-c4473","auth_uri":"https://accounts.google.com/o/oauth2/auth",
+  token_uri:"https://oauth2.googleapis.com/token",
+  auth_provider_x509_cert_url:"https://www.googleapis.com/oauth2/v1/certs",
+  client_secret:"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",
+  redirect_uris:["http://localhost:3002/redirect"],
+    javascript_origins:["http://localhost:3002"]}}
 
 const configuration = new Configuration({
      organization: "org-zIS2Jwi4QvO5w6IynStMtT2r",
@@ -25,9 +33,9 @@ const configuration = new Configuration({
 
 
 const oauth2Client = new google.auth.OAuth2(
-     keys.client_id,
-     keys.client_secret,
-     keys.redirect_uris[0]
+     keys.web.client_id,
+     keys.web.client_secret,
+     keys.web.redirect_uris[0]
    );
 google.options({auth: oauth2Client});
 
