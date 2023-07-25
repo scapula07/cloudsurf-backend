@@ -1,0 +1,26 @@
+{
+  "name": "cloudsurf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon inde.jsx"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "dropbox": "^10.34.0",
+    "express": "^4.18.2",
+    "googleapis": "^122.0.0",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.1",
+    "nodemon": "^3.0.1",
+    "openai": "^3.3.0"
+  }
+}
