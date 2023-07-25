@@ -104,9 +104,9 @@ exports.redirect= async (req, res, next) => {
           //      status: 'success',
           //      tokens
           //    });
-         res.redirect ("http://127.0.0.1:5174/google-redirect");
+     //     res.redirect ("http://127.0.0.1:5174/google-redirect");
 
-          //   res.redirect ("https://cloudsurf-auth.vercel.app/google-redirect");
+            res.redirect ("https://cloudsurf-google-redirect.vercel.app");
      }catch(e){
           console.log(e)
      }
@@ -125,8 +125,8 @@ exports.dropBoxredirect= async (req, res, next) => {
         const token=  await dbx.auth.getAccessTokenFromCode("http://localhost:3002/dropbox-redirect", code)
         fs.writeFileSync("dbtoken.json",JSON.stringify({}))
         fs.writeFileSync("dbtoken.json",JSON.stringify(token))
-         res.redirect ("http://127.0.0.1:5174/dropbox-redirect");
-          //   res.redirect ("https://cloudsurf-auth.vercel.app/dropbox-redirect");
+     //     res.redirect ("http://127.0.0.1:5174/dropbox-redirect");
+            res.redirect ("https://cloudsurf-dropbox-redirect.vercel.app");
      }catch(e){
           console.log(e)
      }
